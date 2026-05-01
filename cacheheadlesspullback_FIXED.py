@@ -15,10 +15,13 @@ from urllib.parse import urlparse, parse_qs
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 try:
-    from ai_assistant import start_ai_assistant, ai_status
+    from pullback_ai_assistant import start_ai_assistant, ai_status
 except ImportError:
-    def start_ai_assistant(*a, **kw): pass
-    def ai_status(): return "AI Assistant: ai_assistant.py not found"
+    try:
+        from ai_assistant import start_ai_assistant, ai_status
+    except ImportError:
+        def start_ai_assistant(*a, **kw): pass
+        def ai_status(): return "AI Assistant: neither pullback_ai_assistant.py nor ai_assistant.py found"
 
 from datetime import datetime, timedelta
 from email.utils import parsedate_to_datetime
